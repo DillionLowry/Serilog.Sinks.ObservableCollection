@@ -1,0 +1,50 @@
+﻿<Page
+    x:Class="Sample.LogPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Sample"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="LogPage"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <Page.Resources>
+        <local:LogEventMessageConverter x:Key="LogEventMessageConverter" />
+    </Page.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Button
+            x:Name="LogButton"
+            Click="LogButton_Click"
+            Content="Generate Log" />
+
+        <DataGrid
+            Grid.Row="1"
+            AutoGenerateColumns="False"
+            IsReadOnly="True"
+            ItemsSource="{Binding LogEvents}">
+            <DataGrid.Columns>
+                <DataGridTextColumn
+                    Width="150"
+                    Binding="{Binding Timestamp, StringFormat={}{0:yyyy-MM-dd HH:mm:ss.fff}}"
+                    Header="Timestamp" />
+                <DataGridTextColumn
+                    Width="100"
+                    Binding="{Binding Level}"
+                    Header="Level" />
+                <DataGridTextColumn
+                    Width="*"
+                    Binding="{Binding Converter={StaticResource LogEventMessageConverter}}"
+                    Header="Message" />
+                <DataGridTextColumn
+                    Width="200"
+                    Binding="{Binding Exception}"
+                    Header="Exception" />
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Page>
