@@ -1,14 +1,45 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
+	  <TargetFrameworks>net6.0;net7.0;net8.0</TargetFrameworks>
+	  <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <Title>Serilog.Sinks.ObservableCollection</Title>
+    <Authors>Dillion Lowry</Authors>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <Copyright>Copyright (c) 2024 Dillion Lowry under the  MIT License</Copyright>
+    <Description>Custom Serilog sink designed to log messages to an ObservableCollection.</Description>
+    <RepositoryUrl>https://github.com/DillionLowry/Serilog.Sinks.ObservableCollection</RepositoryUrl>
+    <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
+    <PackageIcon>icon.png</PackageIcon>
+    <PackageTags>Serilog, Sink</PackageTags>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Assets\icon.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\LICENSE.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Serilog" Version="3.1.1" />
     <PackageReference Include="Serilog.Sinks.PeriodicBatching" Version="4.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\icon.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </Resource>
   </ItemGroup>
 
 </Project>
