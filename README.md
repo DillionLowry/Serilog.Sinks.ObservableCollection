@@ -1,4 +1,4 @@
-# Serilog.Sinks.ObservableCollection
+# Serilog.Sinks.ObservableCollection [![NuGet Version](https://img.shields.io/nuget/v/Serilog.Sinks.ObservableCollection.svg?style=flat)](https://www.nuget.org/packages/Serilog.Sinks.ObservableCollection/)
 The `ObservableCollectionSink` is a custom Serilog sink designed to log messages to an `ObservableCollection`, which can be particularly useful in WPF applications where logs need to be displayed in the UI in real-time.
 ## Prerequisites
 
