@@ -23,7 +23,7 @@ Configure the sink within your application's logging setup. Examples are provide
 ### Standard Logging Configuration
 
 ```csharp
-var LogEvents = new ObservableCollection<LogEventViewModel>();
+var LogEvents = new ObservableCollection<LogEvent>();
 
 Log.Logger = new LoggerConfiguration()
     .WriteTo.ObservableCollection(
@@ -70,7 +70,7 @@ _host = Host.CreateDefaultBuilder()
     })
     .UseSerilog((context, services, configuration) =>
     {
-        var logEvents = services.GetRequiredService<ObservableCollection<LogEventViewModel>>();
+        var logEvents = services.GetRequiredService<ObservableCollection<LogEvent>>();
         configuration
             .MinimumLevel.Debug() // Set the global minimum level to Debug
             .WriteTo.ObservableCollection(logEvents, Application.Current.Dispatcher.Invoke, options =>
