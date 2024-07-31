@@ -4,7 +4,7 @@ The `ObservableCollectionSink` is a custom Serilog sink designed to log messages
 
 - Serilog library installed in your .NET project.
 - Access to a dispatcher (typically from a UI context in WPF or similar).
-- Optional: Serilog.Sinks.PeriodicBatching for batch processing.
+- Serilog.Sinks.PeriodicBatching for batch processing.
 
 ## Installation
 
