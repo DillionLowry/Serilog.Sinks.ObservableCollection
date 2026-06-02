@@ -2,24 +2,20 @@
 The `ObservableCollectionSink` is a custom Serilog sink designed to log messages to an `ObservableCollection`, which can be particularly useful in WPF applications where logs need to be displayed in the UI in real-time.
 ## Prerequisites
 
-- Serilog library installed in your .NET project.
+- Serilog 4.x or later installed in your .NET project (batching support is built-in).
 - Access to a dispatcher (typically from a UI context in WPF or similar).
-- Serilog.Sinks.PeriodicBatching for batch processing.
 
 ## Installation
 
-Ensure Serilog is installed in your project:
+Ensure Serilog 4.x or later is installed in your project:
 ```bash
 Install-Package Serilog
 ```
-For batching capabilities, install the PeriodicBatching package:
 
-```bash
-Install-Package Serilog.Sinks.PeriodicBatching
-```
 ## Configuration
 
 Configure the sink within your application's logging setup. Examples are provided for both standard and batched logging setups.
+
 ### Standard Logging Configuration
 
 ```csharp

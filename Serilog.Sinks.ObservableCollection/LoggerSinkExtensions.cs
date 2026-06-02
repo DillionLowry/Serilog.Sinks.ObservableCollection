@@ -1,7 +1,6 @@
 ﻿using Serilog.Configuration;
 using Serilog.Events;
 using Serilog.Sinks.ObservableCollection;
-using Serilog.Sinks.PeriodicBatching;
 using System.Collections.ObjectModel;
 
 namespace Serilog;
@@ -9,8 +8,8 @@ namespace Serilog;
 /// <summary>
 /// Provides extension methods on <see cref="LoggerConfiguration"/> to configure an <see cref="ObservableCollection{LogEvent}"/> sink.
 /// </summary>
-///     /// <remarks>
-/// This sink can optionally use the batching functionality provided by the <see cref="Serilog.Sinks.PeriodicBatching"/> package.
+/// <remarks>
+/// This sink can optionally use the batching functionality provided natively by Serilog 4.x.
 /// When batching is enabled, log events are collected over a period of time and then dispatched in batches to the observable collection.
 /// This can improve performance when logging a high number of events.
 /// </remarks>
@@ -27,7 +26,7 @@ public static class LoggerSinkExtensions
     /// <remarks>
     /// This method allows log events to be observed in real-time. It can be useful in scenarios where you want to display log events in the UI.
     /// The dispatcher parameter is used to control how log events are dispatched to the observable collection. It's typically used to dispatch log events to the UI thread in desktop applications.
-    /// If batching is enabled in the options, this method uses the <see cref="PeriodicBatchingSink"/> from the <see cref="Serilog.Sinks.PeriodicBatching"/> package to collect and dispatch log events in batches.
+    /// If batching is enabled in the options, this method uses Serilog 4.x native batching support to collect and dispatch log events in batches.
     /// </remarks>
     public static LoggerConfiguration ObservableCollection(
             this LoggerSinkConfiguration loggerConfiguration,
@@ -39,18 +38,20 @@ public static class LoggerSinkExtensions
 
         configure?.Invoke(options);
 
+        var sink = new ObservableCollectionSink(logEvents, dispatcher, options);
+
         if (options.EnableBatching)
         {
-            var batchingOptions = new PeriodicBatchingSinkOptions
+            var batchingOptions = new BatchingOptions
             {
                 BatchSizeLimit = options.BatchSizeLimit,
-                Period = options.Period
+                BufferingTimeLimit = options.Period
             };
-            return loggerConfiguration.Sink(new PeriodicBatchingSink(new ObservableCollectionSink(logEvents, dispatcher, options), batchingOptions), restrictedToMinimumLevel: options.MinimumLevel);
+            return loggerConfiguration.Sink(sink, batchingOptions, restrictedToMinimumLevel: options.MinimumLevel);
         }
         else
         {
-            return loggerConfiguration.Sink(new ObservableCollectionSink(logEvents, dispatcher, options));
+            return loggerConfiguration.Sink(sink, restrictedToMinimumLevel: options.MinimumLevel);
         }
     }
 }

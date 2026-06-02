@@ -1,18 +1,23 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-	  <TargetFrameworks>net6.0;net7.0;net8.0</TargetFrameworks>
+	  <TargetFrameworks>net6.0;net7.0;net8.0;net10.0</TargetFrameworks>
 	  <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-    <Title>Serilog.Sinks.ObservableCollection</Title>
-    <Authors>Dillion Lowry</Authors>
-    <PackageReadmeFile>README.md</PackageReadmeFile>
-    <Copyright>Copyright (c) 2024 Dillion Lowry under the  MIT License</Copyright>
-    <Description>Custom Serilog sink designed to log messages to an ObservableCollection.</Description>
-    <RepositoryUrl>https://github.com/DillionLowry/Serilog.Sinks.ObservableCollection</RepositoryUrl>
-    <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
-    <PackageIcon>icon.png</PackageIcon>
-    <PackageTags>Serilog, Sink</PackageTags>
+	<Nullable>enable</Nullable>
+	<Title>Serilog.Sinks.ObservableCollection</Title>
+	<Authors>Dillion Lowry</Authors>
+	<PackageReadmeFile>README.md</PackageReadmeFile>
+	<Copyright>Copyright (c) 2024 Dillion Lowry under the MIT License</Copyright>
+	<Description>Custom Serilog sink designed to log messages to an ObservableCollection.</Description>
+	<RepositoryUrl>https://github.com/DillionLowry/Serilog.Sinks.ObservableCollection</RepositoryUrl>
+	<RepositoryType>git</RepositoryType>
+	<PackageProjectUrl>https://github.com/DillionLowry/Serilog.Sinks.ObservableCollection</PackageProjectUrl>
+	<PackageLicenseFile>LICENSE.md</PackageLicenseFile>
+	<PackageIcon>icon.png</PackageIcon>
+	<PackageTags>Serilog;Sink;ObservableCollection;Logging</PackageTags>
+	<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+	<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+	<PackageVersion>1.1.0</PackageVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -31,8 +36,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Serilog" Version="3.1.1" />
-    <PackageReference Include="Serilog.Sinks.PeriodicBatching" Version="4.0.1" />
+    <PackageReference Include="Serilog" Version="4.3.1" />
   </ItemGroup>
 
   <ItemGroup>

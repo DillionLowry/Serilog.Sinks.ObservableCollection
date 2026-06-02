@@ -29,7 +29,7 @@ namespace Serilog.Sinks.ObservableCollection.Tests
         }
 
         [Fact]
-        public void EmitBatchAsync_ShouldAddLogEventsToCollection()
+        public async Task EmitBatchAsync_ShouldAddLogEventsToCollection()
         {
             // Arrange
             var logEvents = new ObservableCollection<LogEvent>();
@@ -40,7 +40,7 @@ namespace Serilog.Sinks.ObservableCollection.Tests
             var batch = new List<LogEvent> { logEvent, logEvent };
 
             // Act
-            sink.EmitBatchAsync(batch).Wait();
+            await sink.EmitBatchAsync(batch);
 
             // Assert
             Assert.Equal(2, logEvents.Count);
