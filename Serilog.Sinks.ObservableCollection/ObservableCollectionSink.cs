@@ -93,6 +93,6 @@ public class ObservableCollectionSink : ILogEventSink, IBatchedLogEventSink, IDi
 
     protected virtual void Dispose(bool disposing)
     {
-        LogEvents.Clear();
+        _dispatcher(() => LogEvents.Clear());
     }
 }
