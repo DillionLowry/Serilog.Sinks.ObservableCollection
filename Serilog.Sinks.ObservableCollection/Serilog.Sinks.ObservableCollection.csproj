@@ -22,7 +22,9 @@
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<PackageVersion>1.2.0</PackageVersion>
 	</PropertyGroup>
-
+	<PropertyGroup Condition="'$(TargetFramework)' != 'netstandard2.0'">
+		<DefineConstants>$(DefineConstants);FEATURE_ASYNCDISPOSABLE</DefineConstants>
+	</PropertyGroup>
 	<ItemGroup>
 		<None Include="..\LICENSE.md">
 			<Pack>True</Pack>
@@ -37,7 +39,6 @@
 	<ItemGroup>
 		<PackageReference Include="Serilog" Version="4.4.0" />
 	</ItemGroup>
-
 	<ItemGroup>
 		<None Remove="Assets\icon.png" />
 		<Resource Include="Assets\icon.png">

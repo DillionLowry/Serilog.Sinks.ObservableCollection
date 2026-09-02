@@ -1,4 +1,5 @@
 ﻿using Serilog.Configuration;
+using Serilog.Core;
 using Serilog.Events;
 using Serilog.Sinks.ObservableCollection;
 using System.Collections.ObjectModel;
@@ -6,13 +7,9 @@ using System.Collections.ObjectModel;
 namespace Serilog;
 
 /// <summary>
-/// Provides extension methods on <see cref="LoggerConfiguration"/> to configure an <see cref="ObservableCollection{LogEvent}"/> sink.
+/// Provides extension methods on <see cref="LoggerConfiguration"/> to configure an <see
+/// cref="ObservableCollection{LogEvent}"/> sink.
 /// </summary>
-/// <remarks>
-/// This sink can optionally use the batching functionality provided natively by Serilog 4.x.
-/// When batching is enabled, log events are collected over a period of time and then dispatched in batches to the observable collection.
-/// This can improve performance when logging a high number of events.
-/// </remarks>
 public static class LoggerSinkExtensions
 {
     /// <summary>
@@ -20,19 +17,23 @@ public static class LoggerSinkExtensions
     /// </summary>
     /// <param name="loggerConfiguration">The logger configuration.</param>
     /// <param name="logEvents">The observable collection to write log events to.</param>
-    /// <param name="dispatcher">The dispatcher to use for dispatching log events to the observable collection.</param>
-    /// <param name="configure">An action to configure the options for the observable collection sink.</param>
+    /// <param name="dispatcher">
+    /// The dispatcher to use for dispatching log events to the observable collection.
+    /// </param>
+    /// <param name="configure">
+    /// An action to configure the options for the observable collection sink.
+    /// </param>
     /// <returns>The logger configuration for method chaining.</returns>
     /// <remarks>
-    /// This method allows log events to be observed in real-time. It can be useful in scenarios where you want to display log events in the UI.
-    /// The dispatcher parameter is used to control how log events are dispatched to the observable collection. It's typically used to dispatch log events to the UI thread in desktop applications.
-    /// If batching is enabled in the options, this method uses Serilog 4.x native batching support to collect and dispatch log events in batches.
+    /// The dispatcher parameter is typically used to marshal collection mutations onto the UI
+    /// thread in desktop applications. When batching is enabled, Serilog's built-in <see
+    /// cref="BatchingOptions"/> pipeline collects and dispatches events in batches.
     /// </remarks>
     public static LoggerConfiguration ObservableCollection(
             this LoggerSinkConfiguration loggerConfiguration,
             ObservableCollection<LogEvent> logEvents,
             Action<Action> dispatcher,
-            Action<ObservableCollectionSinkOptions> configure)
+            Action<ObservableCollectionSinkOptions>? configure = null)
     {
         var options = new ObservableCollectionSinkOptions();
 
@@ -40,18 +41,44 @@ public static class LoggerSinkExtensions
 
         var sink = new ObservableCollectionSink(logEvents, dispatcher, options);
 
-        if (options.EnableBatching)
+        if (!options.EnableBatching)
         {
-            var batchingOptions = new BatchingOptions
-            {
-                BatchSizeLimit = options.BatchSizeLimit,
-                BufferingTimeLimit = options.Period
-            };
-            return loggerConfiguration.Sink(sink, batchingOptions, restrictedToMinimumLevel: options.MinimumLevel);
+            return loggerConfiguration.Sink(sink, options.MinimumLevel);
         }
-        else
+
+        var batchingOptions = new BatchingOptions
         {
-            return loggerConfiguration.Sink(sink, restrictedToMinimumLevel: options.MinimumLevel);
+            BatchSizeLimit = options.BatchSizeLimit,
+            BufferingTimeLimit = options.Period,
+            EagerlyEmitFirstEvent = options.EagerlyEmitFirstEvent,
+            QueueLimit = options.QueueLimit
+        };
+
+        if (options.RetryTimeLimit is { } retryTimeLimit)
+        {
+            batchingOptions.RetryTimeLimit = retryTimeLimit;
         }
+
+        return loggerConfiguration.Sink(sink, batchingOptions, options.MinimumLevel);
+    }
+
+    /// <summary>
+    /// Adds a sink that writes log events to an <see cref="ObservableCollection{LogEvent}"/> with batching options.
+    /// </summary>
+    /// <param name="loggerConfiguration">The logger configuration.</param>
+    /// <param name="logEvents">The observable collection to write log events to.</param>
+    /// <param name="dispatcher">The dispatcher to use for dispatching log events to the observable collection.</param>
+    /// <param name="batchingOptions">The batching options to use for the sink.</param>
+    /// <param name="minimumLevel">The minimum log event level required to write to the sink.</param>
+    /// <returns>The logger configuration for method chaining.</returns>
+    public static LoggerConfiguration ObservableCollection(
+            this LoggerSinkConfiguration loggerConfiguration,
+            ObservableCollection<LogEvent> logEvents,
+            Action<Action> dispatcher,
+            BatchingOptions batchingOptions,
+            LogEventLevel minimumLevel = LogEventLevel.Information)
+    {
+        var sink = new ObservableCollectionSink(logEvents, dispatcher, batchingOptions);
+        return loggerConfiguration.Sink(sink, batchingOptions, minimumLevel);
     }
 }

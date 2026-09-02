@@ -243,7 +243,7 @@ namespace Serilog.Sinks.ObservableCollection.Tests
             Action<Action> dispatcher = action => action();
 
             // Act & Assert
-            Assert.Throws<ArgumentNullException>(() => new ObservableCollectionSink(logEvents, dispatcher, null));
+            Assert.Throws<ArgumentNullException>(() => new ObservableCollectionSink(logEvents, dispatcher, options: null));
         }
     }
 }
