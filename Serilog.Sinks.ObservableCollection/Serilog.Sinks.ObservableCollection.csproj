@@ -1,49 +1,49 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-	  <TargetFrameworks>net6.0;net7.0;net8.0;net10.0</TargetFrameworks>
-	  <ImplicitUsings>enable</ImplicitUsings>
-	<Nullable>enable</Nullable>
-	<Title>Serilog.Sinks.ObservableCollection</Title>
-	<Authors>Dillion Lowry</Authors>
-	<PackageReadmeFile>README.md</PackageReadmeFile>
-	<Copyright>Copyright (c) 2024 Dillion Lowry under the MIT License</Copyright>
-	<Description>Custom Serilog sink designed to log messages to an ObservableCollection.</Description>
-	<RepositoryUrl>https://github.com/DillionLowry/Serilog.Sinks.ObservableCollection</RepositoryUrl>
-	<RepositoryType>git</RepositoryType>
-	<PackageProjectUrl>https://github.com/DillionLowry/Serilog.Sinks.ObservableCollection</PackageProjectUrl>
-	<PackageLicenseFile>LICENSE.md</PackageLicenseFile>
-	<PackageIcon>icon.png</PackageIcon>
-	<PackageTags>Serilog;Sink;ObservableCollection;Logging</PackageTags>
-	<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-	<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-	<PackageVersion>1.1.0</PackageVersion>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFrameworks>netstandard2.0;net10.0</TargetFrameworks>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<LangVersion>latest</LangVersion>
+	</PropertyGroup>
+	<PropertyGroup>
+		<Title>Serilog.Sinks.ObservableCollection</Title>
+		<Authors>Dillion Lowry</Authors>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<Copyright>Copyright (c) 2024 Dillion Lowry under the MIT License</Copyright>
+		<Description>Custom Serilog sink designed to log messages to an ObservableCollection.</Description>
+		<RepositoryUrl>https://github.com/DillionLowry/Serilog.Sinks.ObservableCollection</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<PackageProjectUrl>https://github.com/DillionLowry/Serilog.Sinks.ObservableCollection</PackageProjectUrl>
+		<PackageLicenseFile>LICENSE.md</PackageLicenseFile>
+		<PackageIcon>icon.png</PackageIcon>
+		<PackageTags>Serilog;Sink;ObservableCollection;Logging</PackageTags>
+		<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<PackageVersion>1.2.0</PackageVersion>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <None Remove="Assets\icon.png" />
-  </ItemGroup>
+	<ItemGroup>
+		<None Include="..\LICENSE.md">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+		<None Include="..\README.md">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+	</ItemGroup>
 
-  <ItemGroup>
-    <None Include="..\LICENSE.md">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </None>
-    <None Include="..\README.md">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </None>
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Serilog" Version="4.4.0" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Serilog" Version="4.3.1" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Resource Include="Assets\icon.png">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </Resource>
-  </ItemGroup>
+	<ItemGroup>
+		<None Remove="Assets\icon.png" />
+		<Resource Include="Assets\icon.png">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</Resource>
+	</ItemGroup>
 
 </Project>
