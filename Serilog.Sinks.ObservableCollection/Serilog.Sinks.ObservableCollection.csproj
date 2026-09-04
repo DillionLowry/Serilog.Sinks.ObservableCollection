@@ -10,7 +10,7 @@
 		<Title>Serilog.Sinks.ObservableCollection</Title>
 		<Authors>Dillion Lowry</Authors>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
-		<Copyright>Copyright (c) 2024 Dillion Lowry under the MIT License</Copyright>
+		<Copyright>Copyright (c) 2024 Dillion Lowry</Copyright>
 		<Description>Custom Serilog sink designed to log messages to an ObservableCollection.</Description>
 		<RepositoryUrl>https://github.com/DillionLowry/Serilog.Sinks.ObservableCollection</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
@@ -20,7 +20,7 @@
 		<PackageTags>Serilog;Sink;ObservableCollection;Logging</PackageTags>
 		<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-		<PackageVersion>1.2.0</PackageVersion>
+		<PackageVersion>2.0.0</PackageVersion>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(TargetFramework)' != 'netstandard2.0'">
 		<DefineConstants>$(DefineConstants);FEATURE_ASYNCDISPOSABLE</DefineConstants>
