@@ -7,10 +7,8 @@ namespace Serilog.Sinks.ObservableCollection.Tests
         [Fact]
         public void ShouldSetDefaultValues()
         {
-            // Arrange & Act
             var options = new ObservableCollectionSinkOptions();
 
-            // Assert
             Assert.Equal(1000, options.MaxStoredEvents);
             Assert.Equal(LogEventLevel.Verbose, options.MinimumLevel);
             Assert.False(options.EnableBatching);
@@ -21,22 +19,31 @@ namespace Serilog.Sinks.ObservableCollection.Tests
         [Fact]
         public void ShouldAllowValuesToBeChanged()
         {
-            // Arrange
             var options = new ObservableCollectionSinkOptions();
 
-            // Act
             options.MaxStoredEvents = 500;
             options.MinimumLevel = LogEventLevel.Warning;
             options.EnableBatching = true;
             options.BatchSizeLimit = 100;
             options.Period = TimeSpan.FromSeconds(1);
 
-            // Assert
             Assert.Equal(500, options.MaxStoredEvents);
             Assert.Equal(LogEventLevel.Warning, options.MinimumLevel);
             Assert.True(options.EnableBatching);
             Assert.Equal(100, options.BatchSizeLimit);
             Assert.Equal(TimeSpan.FromSeconds(1), options.Period);
+        }
+
+        [Fact]
+        public void ShouldThrowException_WhenConstructorGivenBatchSizeLimitOfZero()
+        {
+            Assert.Throws<ArgumentException>(() => new ObservableCollectionSinkOptions { BatchSizeLimit = 0 });
+        }
+
+        [Fact]
+        public void ShouldThrowException_WhenConstructorGivenPeriodOfZero()
+        {
+            Assert.Throws<ArgumentException>(() => new ObservableCollectionSinkOptions { Period = TimeSpan.Zero });
         }
     }
 }
